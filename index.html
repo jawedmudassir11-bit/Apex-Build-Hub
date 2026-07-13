@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Hub & Idea Directory</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent-hover: #0284c7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+        }
+
+        /* Filter Buttons */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid #334155;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        /* Grid Layout for Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Individual Cards */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid #334155;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            border-color: var(--accent);
+        }
+
+        .card-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .card-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.5rem 1rem;
+            background-color: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card-btn:hover {
+            background-color: var(--accent);
+            color: #fff;
+        }
+
+        /* Hide class for filtering */
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Project & Idea Directory</h1>
+        <p>A categorized collection of tools, dashboards, and creative hubs.</p>
+    </header>
+
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterCards('all')">Show All</button>
+        <button class="filter-btn" onclick="filterCards('dev')">Coding & Game Dev</button>
+        <button class="filter-btn" onclick="filterCards('interactive')">Interactive Tools</button>
+        <button class="filter-btn" onclick="filterCards('utilities')">Utilities & Dashboards</button>
+        <button class="filter-btn" onclick="filterCards('media')">Media, Strategy & Logs</button>
+    </div>
+
+    <div class="grid" id="projectGrid">
+
+        <!-- Coding & Game Dev -->
+        <div class="card dev">
+            <div class="card-category">Coding & Game Dev</div>
+            <h3>Roblox Scripting Library</h3>
+            <p>A clean, searchable site to host custom scripts for weapon systems, mechanical parts, and raycast setups. Share Terrain Editor guides and code snippets with other developers.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card dev">
+            <div class="card-category">Coding & Game Dev</div>
+            <h3>Game Concept & Blueprint Hub</h3>
+            <p>A platform for the planning phase of game development. Document game mechanics, map out level designs, and store concept art before moving to Roblox Studio or C++.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card dev">
+            <div class="card-category">Coding & Game Dev</div>
+            <h3>Procedural Art & Code Gallery</h3>
+            <p>A visual portfolio focused on the intersection of programming and 3D design. Display renders created via OpenSCAD, Blender, or custom engines alongside clean blocks of C++ or Java code.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card dev">
+            <div class="card-category">Coding & Game Dev</div>
+            <h3>Interactive Java & BlueJ Guide</h3>
+            <p>A tutorial website for students tackling the ICSE computer studies syllabus. Break down loops, classes, and OOP in BlueJ using clean code snippets and visual flowcharts.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <!-- Interactive Tools -->
+        <div class="card interactive">
+            <div class="card-category">Interactive Tools</div>
+            <h3>Interactive Text Adventure</h3>
+            <p>A browser-based "Choose Your Own Adventure" game. Write a mystery or sci-fi story where readers click buttons at the end of each paragraph to navigate branching paths.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card interactive">
+            <div class="card-category">Interactive Tools</div>
+            <h3>Ambient Focus Mixer</h3>
+            <p>A productivity website with a soundboard that lets users mix background noises—like rain, typing, or train sounds—and adjust volumes. Includes a simple timer for study sessions.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card interactive">
+            <div class="card-category">Interactive Tools</div>
+            <h3>Digital Time Capsule</h3>
+            <p>A minimalist website where visitors write a letter to their future selves. Enter a date, and the site "locks" the message in local storage until that exact day arrives.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card interactive">
+            <div class="card-category">Interactive Tools</div>
+            <h3>Pixel Art Maker</h3>
+            <p>A web-based drawing board where people can click on a grid to color in squares and create retro 8-bit art. Includes a color palette and a clear board function.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <!-- Utilities & Dashboards -->
+        <div class="card utilities">
+            <div class="card-category">Utilities & Dashboards</div>
+            <h3>Minimalist Daily Utility Hub</h3>
+            <p>A fast, single-page application combining a persistent to-do list, an advanced calculator, and live weather or astronomical visibility updates for the Kolkata region.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card utilities">
+            <div class="card-category">Utilities & Dashboards</div>
+            <h3>The Formal Document Generator</h3>
+            <p>A web tool to help users quickly format official correspondence. Type in details like project names and dates to automatically generate perfectly structured handover or completion letters.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card utilities">
+            <div class="card-category">Utilities & Dashboards</div>
+            <h3>Kolkata Sky & Transit Dashboard</h3>
+            <p>A hyper-local utility board pulling in live data to show current weather conditions, calculate astronomical visibility, and track local transit or highway routing updates.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card utilities">
+            <div class="card-category">Utilities & Dashboards</div>
+            <h3>Infrastructure & Expressway Tracker</h3>
+            <p>An informational site tracking highway widening and routing projects. List structural details, flyover counts, and construction updates for routes across Uttar Pradesh, West Bengal, and Bihar.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <!-- Media, Strategy & Logs -->
+        <div class="card media">
+            <div class="card-category">Media, Strategy & Logs</div>
+            <h3>3D Model Showcase</h3>
+            <p>A visual gallery displaying procedural models and animations. Organize by software (Blender, OpenSCAD, Fusion 360) and offer direct download links for free assets.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card media">
+            <div class="card-category">Media, Strategy & Logs</div>
+            <h3>Mobile Gaming Strategy Vault</h3>
+            <p>A dedicated hub for game mechanics, loadouts, and level strategies. Includes high-score tips for Magic Tiles 3, chapter breakdowns for Dan the Man, and weapon guides for Call of Duty.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card media">
+            <div class="card-category">Media, Strategy & Logs</div>
+            <h3>Minimalist Poetry Anthology</h3>
+            <p>A beautifully designed, text-focused website archiving Urdu poetry. Features clean typography, highlighting verses about family bonds with English translations and personal notes.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+        <div class="card media">
+            <div class="card-category">Media, Strategy & Logs</div>
+            <h3>The Central Asia Digital Itinerary</h3>
+            <p>A structured travel planner for an eight-day route through Uzbekistan and Kyrgyzstan. Features an interactive timeline, transit schedules, weather data, and a digital packing list.</p>
+            <a href="#" class="card-btn">Build This</a>
+        </div>
+
+    </div>
+
+    <script>
+        function filterCards(category) {
+            // Get all buttons and remove the active class
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Add active class to the clicked button
+            event.target.classList.add('active');
+
+            // Get all cards
+            const cards = document.querySelectorAll('.card');
+
+            // Loop through cards and show/hide based on category
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.classList.remove('hidden');
+                } else {
+                    if (card.classList.contains(category)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
