@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Hub & Idea Directory</title>
+    <title>Apex Build Hub</title>
+    <meta name="google-site-verification" content="2Fxf9tNmpW2DTpBuaAb16FlYNH029H5Df-0ohISpDlA" />
     <style>
         :root {
             --bg-color: #0f172a;
@@ -69,7 +70,7 @@
             color: #fff;
         }
 
-        /* Grid Layout for Cards */
+        /* Grid Layout */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -78,7 +79,6 @@
             margin: 0 auto;
         }
 
-        /* Individual Cards */
         .card {
             background-color: var(--card-bg);
             border-radius: 10px;
@@ -122,8 +122,9 @@
             color: var(--accent);
             border: 1px solid var(--accent);
             border-radius: 5px;
-            text-decoration: none;
+            cursor: pointer;
             text-align: center;
+            font-size: 1rem;
             transition: 0.3s;
         }
 
@@ -132,23 +133,78 @@
             color: #fff;
         }
 
-        /* Hide class for filtering */
-        .hidden {
+        .hidden { display: none; }
+
+        /* Modal Styles */
+        .modal-overlay {
             display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--accent);
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .close-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tech-box {
+            background: var(--bg-color);
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .tech-box strong {
+            color: var(--accent);
         }
 
         @media (max-width: 600px) {
-            body {
-                padding: 1rem;
-            }
+            body { padding: 1rem; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Project & Idea Directory</h1>
-        <p>A categorized collection of tools, dashboards, and creative hubs.</p>
+        <h1>Apex Build Hub</h1>
+        <p>A categorized directory of tools, dashboards, and creative projects.</p>
     </header>
 
     <div class="filters">
@@ -165,133 +221,92 @@
         <div class="card dev">
             <div class="card-category">Coding & Game Dev</div>
             <h3>Roblox Scripting Library</h3>
-            <p>A clean, searchable site to host custom scripts for weapon systems, mechanical parts, and raycast setups. Share Terrain Editor guides and code snippets with other developers.</p>
-            <a href="#" class="card-btn">Build This</a>
+            <p>A clean, searchable site to host custom scripts for weapon systems, mechanical parts, and raycast setups.</p>
+            <button class="card-btn" onclick="openModal('Roblox Scripting Library', 'Luau, HTML, CSS, GitHub Pages', 'Gather your top 5 best Roblox scripts and copy them into text files.')">Build This</button>
         </div>
 
         <div class="card dev">
             <div class="card-category">Coding & Game Dev</div>
-            <h3>Game Concept & Blueprint Hub</h3>
-            <p>A platform for the planning phase of game development. Document game mechanics, map out level designs, and store concept art before moving to Roblox Studio or C++.</p>
-            <a href="#" class="card-btn">Build This</a>
+            <h3>Procedural Art Gallery</h3>
+            <p>A visual portfolio focused on the intersection of programming and 3D design using OpenSCAD and Blender.</p>
+            <button class="card-btn" onclick="openModal('Procedural Art Gallery', 'HTML, CSS Grid, C++, OpenSCAD', 'Export your best 3D render as a PNG and find the exact C++ code used to make it.')">Build This</button>
         </div>
 
         <div class="card dev">
             <div class="card-category">Coding & Game Dev</div>
-            <h3>Procedural Art & Code Gallery</h3>
-            <p>A visual portfolio focused on the intersection of programming and 3D design. Display renders created via OpenSCAD, Blender, or custom engines alongside clean blocks of C++ or Java code.</p>
-            <a href="#" class="card-btn">Build This</a>
-        </div>
-
-        <div class="card dev">
-            <div class="card-category">Coding & Game Dev</div>
-            <h3>Interactive Java & BlueJ Guide</h3>
-            <p>A tutorial website for students tackling the ICSE computer studies syllabus. Break down loops, classes, and OOP in BlueJ using clean code snippets and visual flowcharts.</p>
-            <a href="#" class="card-btn">Build This</a>
+            <h3>Interactive BlueJ Guide</h3>
+            <p>A tutorial website for students tackling the ICSE computer studies syllabus, breaking down loops and classes.</p>
+            <button class="card-btn" onclick="openModal('Interactive BlueJ Guide', 'HTML, CSS, Java', 'Write out the explanation for a basic For-Loop on a piece of paper before coding the site.')">Build This</button>
         </div>
 
         <!-- Interactive Tools -->
         <div class="card interactive">
             <div class="card-category">Interactive Tools</div>
-            <h3>Interactive Text Adventure</h3>
-            <p>A browser-based "Choose Your Own Adventure" game. Write a mystery or sci-fi story where readers click buttons at the end of each paragraph to navigate branching paths.</p>
-            <a href="#" class="card-btn">Build This</a>
-        </div>
-
-        <div class="card interactive">
-            <div class="card-category">Interactive Tools</div>
-            <h3>Ambient Focus Mixer</h3>
-            <p>A productivity website with a soundboard that lets users mix background noises—like rain, typing, or train sounds—and adjust volumes. Includes a simple timer for study sessions.</p>
-            <a href="#" class="card-btn">Build This</a>
-        </div>
-
-        <div class="card interactive">
-            <div class="card-category">Interactive Tools</div>
-            <h3>Digital Time Capsule</h3>
-            <p>A minimalist website where visitors write a letter to their future selves. Enter a date, and the site "locks" the message in local storage until that exact day arrives.</p>
-            <a href="#" class="card-btn">Build This</a>
+            <h3>Text Adventure Game</h3>
+            <p>A browser-based "Choose Your Own Adventure" game where readers click buttons to navigate branching paths.</p>
+            <button class="card-btn" onclick="openModal('Text Adventure Game', 'HTML, CSS, JavaScript', 'Write a 3-paragraph story where the end of paragraph 1 has two distinct choices.')">Build This</button>
         </div>
 
         <div class="card interactive">
             <div class="card-category">Interactive Tools</div>
             <h3>Pixel Art Maker</h3>
-            <p>A web-based drawing board where people can click on a grid to color in squares and create retro 8-bit art. Includes a color palette and a clear board function.</p>
-            <a href="#" class="card-btn">Build This</a>
+            <p>A web-based drawing board where people can click on a grid to color in squares and create retro 8-bit art.</p>
+            <button class="card-btn" onclick="openModal('Pixel Art Maker', 'HTML, CSS Grid, JavaScript (DOM Manipulation)', 'Create an empty HTML file and build a 10x10 CSS Grid.')">Build This</button>
         </div>
 
         <!-- Utilities & Dashboards -->
         <div class="card utilities">
             <div class="card-category">Utilities & Dashboards</div>
-            <h3>Minimalist Daily Utility Hub</h3>
-            <p>A fast, single-page application combining a persistent to-do list, an advanced calculator, and live weather or astronomical visibility updates for the Kolkata region.</p>
-            <a href="#" class="card-btn">Build This</a>
+            <h3>Minimalist Utility Hub</h3>
+            <p>A fast application combining a persistent to-do list, an advanced calculator, and live weather updates.</p>
+            <button class="card-btn" onclick="openModal('Minimalist Utility Hub', 'HTML, CSS, JavaScript (Local Storage)', 'Combine the code from your existing calculator and to-do list into one new HTML file.')">Build This</button>
         </div>
 
         <div class="card utilities">
             <div class="card-category">Utilities & Dashboards</div>
-            <h3>The Formal Document Generator</h3>
-            <p>A web tool to help users quickly format official correspondence. Type in details like project names and dates to automatically generate perfectly structured handover or completion letters.</p>
-            <a href="#" class="card-btn">Build This</a>
-        </div>
-
-        <div class="card utilities">
-            <div class="card-category">Utilities & Dashboards</div>
-            <h3>Kolkata Sky & Transit Dashboard</h3>
-            <p>A hyper-local utility board pulling in live data to show current weather conditions, calculate astronomical visibility, and track local transit or highway routing updates.</p>
-            <a href="#" class="card-btn">Build This</a>
-        </div>
-
-        <div class="card utilities">
-            <div class="card-category">Utilities & Dashboards</div>
-            <h3>Infrastructure & Expressway Tracker</h3>
-            <p>An informational site tracking highway widening and routing projects. List structural details, flyover counts, and construction updates for routes across Uttar Pradesh, West Bengal, and Bihar.</p>
-            <a href="#" class="card-btn">Build This</a>
+            <h3>Document Generator</h3>
+            <p>A web tool to help users quickly format official correspondence like project handover letters.</p>
+            <button class="card-btn" onclick="openModal('Document Generator', 'HTML Forms, JavaScript', 'Create a simple HTML form with inputs for Date, Name, and Project Title.')">Build This</button>
         </div>
 
         <!-- Media, Strategy & Logs -->
         <div class="card media">
             <div class="card-category">Media, Strategy & Logs</div>
-            <h3>3D Model Showcase</h3>
-            <p>A visual gallery displaying procedural models and animations. Organize by software (Blender, OpenSCAD, Fusion 360) and offer direct download links for free assets.</p>
-            <a href="#" class="card-btn">Build This</a>
+            <h3>Mobile Gaming Vault</h3>
+            <p>A dedicated hub for game mechanics, offering high-score tips for Magic Tiles 3 and weapon guides for Call of Duty.</p>
+            <button class="card-btn" onclick="openModal('Mobile Gaming Vault', 'HTML, CSS (Flexbox)', 'Write down your top 3 strategies for FC Mobile or Dan the Man.')">Build This</button>
         </div>
 
         <div class="card media">
             <div class="card-category">Media, Strategy & Logs</div>
-            <h3>Mobile Gaming Strategy Vault</h3>
-            <p>A dedicated hub for game mechanics, loadouts, and level strategies. Includes high-score tips for Magic Tiles 3, chapter breakdowns for Dan the Man, and weapon guides for Call of Duty.</p>
-            <a href="#" class="card-btn">Build This</a>
-        </div>
-
-        <div class="card media">
-            <div class="card-category">Media, Strategy & Logs</div>
-            <h3>Minimalist Poetry Anthology</h3>
-            <p>A beautifully designed, text-focused website archiving Urdu poetry. Features clean typography, highlighting verses about family bonds with English translations and personal notes.</p>
-            <a href="#" class="card-btn">Build This</a>
-        </div>
-
-        <div class="card media">
-            <div class="card-category">Media, Strategy & Logs</div>
-            <h3>The Central Asia Digital Itinerary</h3>
-            <p>A structured travel planner for an eight-day route through Uzbekistan and Kyrgyzstan. Features an interactive timeline, transit schedules, weather data, and a digital packing list.</p>
-            <a href="#" class="card-btn">Build This</a>
+            <h3>Central Asia Itinerary</h3>
+            <p>A structured travel planner for an eight-day route through Uzbekistan and Kyrgyzstan.</p>
+            <button class="card-btn" onclick="openModal('Central Asia Itinerary', 'HTML, CSS (Timeline Layout)', 'Map out Days 1 through 8 in a text document, listing the city for each day.')">Build This</button>
         </div>
 
     </div>
 
+    <!-- Modal Background -->
+    <div id="projectModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Project Title</h2>
+            <div class="tech-box">
+                <p><strong>Tech Stack:</strong> <span id="modalTech"></span></p>
+                <br>
+                <p><strong>First Step:</strong> <span id="modalStep"></span></p>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Filter logic
         function filterCards(category) {
-            // Get all buttons and remove the active class
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-
-            // Add active class to the clicked button
             event.target.classList.add('active');
 
-            // Get all cards
             const cards = document.querySelectorAll('.card');
-
-            // Loop through cards and show/hide based on category
             cards.forEach(card => {
                 if (category === 'all') {
                     card.classList.remove('hidden');
@@ -303,6 +318,30 @@
                     }
                 }
             });
+        }
+
+        // Modal logic
+        const modal = document.getElementById('projectModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalTech = document.getElementById('modalTech');
+        const modalStep = document.getElementById('modalStep');
+
+        function openModal(title, tech, step) {
+            modalTitle.innerText = title;
+            modalTech.innerText = tech;
+            modalStep.innerText = step;
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            modal.classList.remove('show');
+        }
+
+        // Close modal if user clicks outside the box
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
         }
     </script>
 </body>
