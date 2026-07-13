@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apex Build Hub</title>
-    <meta name="google-site-verification" content="2Fxf9tNmpW2DTpBuaAb16FlYNH029H5Df-0ohISpDlA" />
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #151e2e;
-            --text-main: #ffffff;
-            --text-muted: #9ca3af;
+            --bg-color: #050810;
             --accent: #00e5ff;
             --accent-hover: #00b3cc;
+            --text-main: #ffffff;
+            --text-muted: #9ca3af;
         }
 
         * {
@@ -22,121 +20,127 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Animated Gradient Background */
         body {
-            background-color: var(--bg-color);
+            background: linear-gradient(-45deg, #050810, #0f172a, #064e3b, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: var(--text-main);
             line-height: 1.6;
             padding: 2rem;
+            min-height: 100vh;
         }
 
-        /* Cutscene Styles */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Typewriter Cutscene */
         #intro-cutscene {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: var(--bg-color);
+            background-color: #000;
             z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 1s ease;
+            transition: opacity 1s ease, visibility 1s;
         }
 
-        #intro-cutscene h1 {
+        .typewriter h1 {
             color: var(--accent);
-            font-size: 3rem;
+            font-family: monospace;
+            overflow: hidden;
+            border-right: .15em solid var(--accent);
+            white-space: nowrap;
+            margin: 0 auto;
             letter-spacing: 5px;
-            animation: fadeInOut 3s forwards;
-            text-align: center;
-            text-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
+            animation: typing 1.5s steps(30, end), blink-caret .5s step-end infinite;
         }
 
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: scale(0.9); }
-            30% { opacity: 1; transform: scale(1); }
-            70% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(1.1); }
-        }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent) } }
 
-        header { text-align: center; margin-bottom: 3rem; }
-        header h1 { font-size: 2.5rem; color: var(--text-main); margin-bottom: 0.5rem; }
-        header h1 span { color: var(--accent); }
-        header p { color: var(--text-muted); }
-
+        /* Hub Layout */
+        header { text-align: center; margin-bottom: 3rem; animation: fadeIn 2s ease-in; }
+        header h1 { font-size: 3rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
+        header h1 span { color: var(--accent); text-shadow: 0 0 20px rgba(0, 229, 255, 0.4); }
+        
         .filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
-        
         .filter-btn { 
-            background-color: transparent; 
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(10px);
             color: var(--text-muted); 
-            border: 1px solid #334155; 
+            border: 1px solid rgba(255,255,255,0.1); 
             padding: 0.5rem 1.5rem; 
-            border-radius: 20px; 
+            border-radius: 30px; 
             cursor: pointer; 
-            transition: all 0.3s ease; 
+            transition: 0.4s; 
         }
-        
         .filter-btn:hover, .filter-btn.active { 
-            background-color: rgba(0, 229, 255, 0.1); 
-            border-color: var(--accent); 
-            color: var(--accent); 
+            background: var(--accent); 
+            color: #000; 
+            box-shadow: 0 0 15px var(--accent); 
+            border-color: var(--accent);
         }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
-        
+        /* Glassmorphism Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
         .card { 
-            background-color: var(--card-bg); 
-            border-radius: 12px; 
-            padding: 1.5rem; 
-            border: 1px solid #1f2937; 
+            background: rgba(21, 30, 46, 0.6); 
+            backdrop-filter: blur(12px);
+            border-radius: 16px; 
+            padding: 2rem; 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
             display: flex; 
             flex-direction: column; 
-            transition: all 0.3s ease; 
+            transition: all 0.4s ease; 
         }
-        
         .card:hover { 
-            transform: translateY(-5px); 
-            border-color: var(--accent);
-            box-shadow: 0 10px 20px -5px rgba(0, 229, 255, 0.2);
+            transform: translateY(-10px) scale(1.02); 
+            border-color: rgba(0, 229, 255, 0.5);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 229, 255, 0.1);
         }
 
-        .card-category { font-size: 0.75rem; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; letter-spacing: 1px; }
-        .card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
-        .card p { color: var(--text-muted); font-size: 0.9rem; flex-grow: 1; }
+        .card-category { font-size: 0.75rem; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; font-weight: bold; }
+        .card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .card p { color: var(--text-muted); font-size: 0.95rem; flex-grow: 1; margin-bottom: 1.5rem;}
         
         .card-btn { 
             display: inline-block; 
-            margin-top: 1.5rem; 
             padding: 0.75rem 1rem; 
-            background: linear-gradient(90deg, #0f766e, #06b6d4);
-            color: #fff; 
-            border: none; 
-            border-radius: 6px; 
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--accent); 
+            border: 1px solid var(--accent); 
+            border-radius: 8px; 
             cursor: pointer; 
             text-align: center; 
             text-decoration: none; 
             transition: 0.3s; 
-            font-size: 1rem; 
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
         .card-btn:hover { 
-            background: linear-gradient(90deg, #115e59, #0891b2);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            background: var(--accent); 
+            color: #000; 
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
         }
 
-        .card-btn.disabled {
-            background: #1f2937;
-            color: #6b7280;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
+        .card-btn.disabled { background: transparent; border-color: #334155; color: #6b7280; cursor: not-allowed; box-shadow: none; }
         .hidden { display: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
+    <!-- Typewriter Cutscene -->
     <div id="intro-cutscene">
-        <h1>APEX SYSTEM ONLINE</h1>
+        <div class="typewriter">
+            <h1>INITIALIZING APEX_HUB...</h1>
+        </div>
     </div>
 
     <header>
@@ -174,12 +178,17 @@
     </div>
 
     <script>
+        // Intro Cutscene Logic
         setTimeout(() => {
             const intro = document.getElementById('intro-cutscene');
             intro.style.opacity = '0';
-            setTimeout(() => intro.remove(), 1000); 
-        }, 2000);
+            setTimeout(() => {
+                intro.style.visibility = 'hidden';
+                intro.remove();
+            }, 1000); 
+        }, 2500);
 
+        // Filter Logic
         function filterCards(category) {
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
